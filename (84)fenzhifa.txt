@@ -1,0 +1,22 @@
+class Solution 
+{
+    //分治法，先寻找一行里面最小的值，将其向两边扩充，得到一个面积
+    //以此最小值将一行分割成两半，分别在两部分用同样的方式
+    //递归，左右两边取最大值和整个区间中最小值向最右和最左边扩充后的面积进行比较，得到最大面积
+    public int calculateArea(int[] heights,int start,int end){
+        if(start > end)
+            return 0;
+        
+        int minindex = start;
+        for(int i = start; i <= end; i++){
+            if(heights[minindex] > heights[i])
+                 minindex = i;                 //找这个区间的一个最小值
+        } 
+        return Math.max(heights[minindex]*(end - start + 1),Math.max(calculateArea(heights,start,minindex-1),calculateArea(heights,minindex+1,end)));
+    }
+    public int largestRectangleArea(int[] heights) 
+    {
+  
+       return calculateArea(heights,0,heights.length-1);
+    }
+}

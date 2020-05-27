@@ -1,0 +1,23 @@
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+      //优化暴力解法
+      //用前一组的最低高度求出当前对间的最低高度  
+        if(heights.length == 0)
+            return 0;
+        if(heights.length == 1)
+            return heights[0];
+        
+        int maxArea = 0;
+
+        for(int i = 0;i < heights.length;i++){
+            int minHeight = Integer.MAX_VALUE;
+            for(int j = i; j < heights.length;j++){
+               
+                minHeight = Math.min(minHeight,heights[j]); 
+                maxArea =  Math.max(maxArea,minHeight*(j-i+1));
+
+            }
+        }
+        return maxArea;
+    }
+}

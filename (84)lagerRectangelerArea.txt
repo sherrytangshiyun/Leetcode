@@ -1,0 +1,26 @@
+//LeetCode084
+//柱状图中最大矩形面积
+//暴力解法超出时间限制
+//三重循环找出所有可能的面积，取其中最大值
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        
+        if(heights.length == 0)
+            return 0;
+        if(heights.length == 1)
+            return heights[0];
+        
+        int maxArea = 0;
+
+        for(int i = 0;i < heights.length;i++){
+            for(int j = i; j < heights.length;j++){
+                int minHeight = Integer.MAX_VALUE;
+                for(int k = i; k <= j; k++)
+                    minHeight = Math.min(minHeight,heights[k]);
+            
+                maxArea =  Math.max(maxArea,minHeight*(j-i+1));
+            }
+        }
+        return maxArea;
+    }
+}

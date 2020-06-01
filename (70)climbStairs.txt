@@ -1,0 +1,36 @@
+
+class Solution {
+    public int climbStairs(int n) {
+    //斐波那契数列
+    //找出斐波那契数列的第n个数
+    if(n == 1)
+       return 1;
+    int first = 1;
+    int second = 2;
+    int third = 0;
+    for(int i = 3; i < n+1; i++){
+        third = first + second;
+        first = second;
+        second = third;
+    }
+    return second;
+}
+}
+    
+//以下是动态规划
+//dp数组长度为n+1,初始状态设为1和2，dp[1] = 1;dp[2] = 2;
+//dp[i] = dp[i-1] + dp[i-2],因为前一个走一步到达i,前前一个走两步到达i,因此当前位置的值等于前两个位置的方法种类之和
+ class Solution {
+    public int climbStairs(int n) {
+    
+    if(n == 1)
+       return 1;   
+     int[] dp = new int[n+1];
+     dp[1] = 1;
+     dp[2] = 2;
+     for(int i = 3; i < n+1; i++){
+         dp[i] = dp[i-1]+dp[i-2];
+     }
+     return dp[n];
+    }
+}

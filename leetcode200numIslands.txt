@@ -1,0 +1,32 @@
+
+//从矩阵初始位置遍历矩阵，当前位置为1时，岛屿数量加1，再将其相邻所有元素都修改为0
+
+public class leetcode200numIslands {
+
+    public static void main(String[] args) {
+        int[][] arr = new int[][]{{1,0,1,1,0},{1,1,0,1,1},{1,0,1,0,1}};
+        int result = 0;
+        for(int i = 0; i < arr.length; i++){
+            for(int j = 0; j < arr[0].length; j++){
+                if(arr[i][j] == 1){
+                    result++;
+                    erase(arr,i,j);
+                }
+
+            }
+        }
+        System.out.print(result);
+    }
+
+    public static void erase(int[][] arr, int i , int j){
+        arr[i][j] = 0;
+        while((i-1) >= 0 && arr[i-1][j] == 1)
+            erase(arr,i-1,j);
+        while((i+1) < arr.length && arr[i+1][j] == 1)
+            erase(arr,i+1,j);
+        while((j-1) >= 0 && arr[i][j-1] == 1)
+            erase(arr,i,j-1);
+        while((j + 1) < arr[0].length && arr[i][j+1] == 1)
+            erase(arr,i,j+1);
+    }
+}

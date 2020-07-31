@@ -1,0 +1,33 @@
+public class leetcode215topk {
+    public static void main(String[] args) {
+        int[] arr =new int[]{1,5,2,3,9,4,2,9,2,3,0,4};
+        int k = 5;
+        quickSortTopk(arr,0,arr.length-1,k);
+        System.out.println(arr[arr.length-k]);
+    }
+    private static void quickSortTopk(int[] arr, int low, int high,int k){
+        if(low < high){
+            int index = getIndex(arr, low,high);
+            if(index == arr.length-k)
+                return;
+            else if(index > arr.length-k)
+                quickSortTopk(arr,low,index-1,k);
+            else
+                quickSortTopk(arr,index +1,high,k);
+        }
+    }
+    private static int getIndex(int[] arr, int low , int high){
+
+        int tmp = arr[low];
+        while(low < high){
+            while(low < high && arr[high] >= tmp)
+                high--;
+            arr[low] = arr[high];
+            while(low < high && arr[low] <= tmp)
+                low++;
+            arr[high] = arr[low];
+        }
+        arr[low] = tmp;
+        return low;
+    }
+}

@@ -1,0 +1,52 @@
+
+//leetcode20, 有效括号
+//遍历字符串，当前字符为左括号时，将其入栈
+//如果是右括号，判断栈是否为空，如果为空，匹配失败，返回false
+//斩栈不空则弹出栈顶元素，栈顶元素和当前元素匹配，则访问下一个字符
+//最后栈空则返回true
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class leetcode20isValid {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String s = in.nextLine();
+        boolean ans = false;
+        ans = isValid(s);
+        System.out.print(ans);
+    }
+
+    private static boolean isValid(String s){
+
+        Stack<Character> ch = new Stack<>();
+        boolean ans = false;
+        if(null == s)
+            return ans;
+
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == '(' || s.charAt(i) == '{' || s.charAt(i) == '['){
+                ch.push(s.charAt(i));
+            }
+            else{
+                if(ch.isEmpty())
+                    return ans;
+                else{
+                    if( ch.peek() == '('&&s.charAt(i)== ')' ||  ch.peek() == '['&&s.charAt(i)== ']' ||  ch.peek() == '{'&&s.charAt(i)== '}')
+                    {
+                        ch.pop();
+                        continue;
+                    }
+                    else
+                        return ans;
+                }
+            }
+        }
+
+        if(ch.isEmpty())
+            ans = true;
+
+        return ans;
+    }
+
+}

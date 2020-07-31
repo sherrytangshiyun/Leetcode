@@ -1,0 +1,45 @@
+//最长匹配括号长度
+//遍历字符串，当前位置为左括号时则入栈，start记录最长匹配括号长度的初始位置,max记录当前最长匹配
+//遇到右括号时判断栈是否为空，如果为空 start+1  ，说明当前右括号不在匹配的元素中
+//如果栈不空，则弹出栈顶元素，弹出后如果栈为空 当前最长匹配长度为Math.max(max,index-start-1)
+//弹出栈顶元素后，如果栈不空，当前最长匹配长度为Math.max(max,index-stack.peek())
+//栈中存放的是当前遍历位置的索引，方便计算长度
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class leetcode32longestValidParentheses {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        String first = in.nextLine();
+        int start = 0;
+        int ans = 0;
+        if(null == first)
+            System.out.print(0);
+        Stack<Integer> st = new Stack<>();
+
+
+        for(int i = 0; i < first.length(); i++){
+            if('(' == first.charAt(i)){
+                st.push(i);
+                continue;
+            }else
+            {
+                if(st.empty())
+                {
+                    start = i + 1;
+                    continue;
+                }else
+                {
+                    st.pop();
+                    if(st.empty())
+                        ans = Math.max(ans,i-start+1);
+                    else
+                        ans = Math.max(ans,i-st.peek());
+                }
+
+            }
+        }
+        System.out.print(ans);
+    }
+}

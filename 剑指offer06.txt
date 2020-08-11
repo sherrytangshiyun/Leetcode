@@ -1,0 +1,131 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    
+    public int[] reversePrint(ListNode head) {
+        
+        ListNode node = head;
+        int count = 0;
+        //Stack<Integer> sc = new Stack<>();
+
+        while(node != null){
+            count++;
+            node = node.next;
+        }
+
+        int[] arr = new int[count];
+        //int[] ans = new int[count];
+       
+        node = head;
+
+        for(int i = 0; i < count; i++){
+            arr[count-i-1] = node.val;
+            node = node.next;
+        }
+ 
+        return arr;
+    }
+
+}
+
+
+
+
+//时间超出限制
+
+
+public class reversePrint {
+    public static void main(String[] args) {
+
+        int[] arr = new int[30];
+
+        Linkednode node = new Linkednode(0);
+        Linkednode node1 = new Linkednode(1);
+        Linkednode node2 = new Linkednode(2);
+        Linkednode node3 = new Linkednode(3);
+        Linkednode node4 = new Linkednode(4);
+
+        node.setNext(node1);
+        node1.setNext(node2);
+        node2.setNext(node3);
+        node3.setNext(node4);
+
+        Linkednode curnode = reverse(node);
+        int i = 0;
+        while(curnode != null){
+
+            arr[i] = curnode.getData();
+            i++;
+            curnode = curnode.getNext();
+        }
+
+        for(int x : arr){
+            System.out.print(x + " ");
+        }
+
+    }
+
+    public static Linkednode reverse(Linkednode node){
+        if(node == null || node.next == null){
+            return node;
+        }
+
+        Linkednode curNode = reverse(node.next);
+        node.next.next = node;
+        node.next = null;
+
+        return curNode;
+    }
+
+}
+
+
+
+//使用栈
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    
+    public int[] reversePrint(ListNode head) {
+        
+        ListNode node = head;
+        int count = 0;
+        Stack<Integer> sc = new Stack<>();
+
+        while(node != null){
+            count++;
+            sc.push(node.val);
+            node = node.next;
+        }
+
+        int[] arr = new int[count];
+ 
+       
+        //node = head;
+        int y = 0;
+        while(y < count){
+            arr[y] = sc.pop();
+            y++;
+        }
+
+        return arr;
+    }
+
+}
+
+
+

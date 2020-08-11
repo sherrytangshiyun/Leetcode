@@ -1,0 +1,38 @@
+public class isCycle {
+    public static void main(String[] args) {
+
+        Linkednode node = new Linkednode(0);
+        Linkednode node1 = new Linkednode(1);
+        Linkednode node2 = new Linkednode(2);
+        Linkednode node3 = new Linkednode(3);
+        Linkednode node4 = new Linkednode(4);
+
+        node.setNext(node1);
+        node1.setNext(node2);
+        node2.setNext(node3);
+        node3.setNext(node4);
+        node4.setNext(node2);
+
+
+        boolean ans = isCycle(node);
+        System.out.print(ans);
+
+    }
+
+    private static boolean isCycle(Linkednode node){
+       if(node == null || node.next == null)
+           return false;
+        Linkednode slow = node;
+        Linkednode fast = node.next.next;
+
+        while(slow != fast)
+        {
+            if(fast == null || fast.next == null)
+                return false;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return true;
+    }
+}

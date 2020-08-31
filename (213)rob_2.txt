@@ -1,0 +1,47 @@
+import java.util.Scanner;
+
+//所有房子围城一个圈
+//分为两种情况进行动态规划
+//如果第一家被偷，则求1-n-1家的最大值
+//如果第一家不偷，则求2-n的最大值
+
+public class leetcode213rob_2 {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int[] arr = new int[n];
+        for(int i = 0; i < n; i++){
+            arr[i] = in.nextInt();
+        }
+        int res = rob_2(arr);
+        System.out.print(res);
+
+    }
+    private static int rob_2(int[] nums){
+
+
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+
+        int[] dp = new int[nums.length]; //第一家被偷
+        int[] dp1 = new int[nums.length+1];//第一家不偷
+
+        //第一家偷
+        dp[0] = 0;
+        dp[1] = nums[0];
+        for(int i = 2; i < nums.length; i++){
+            dp[i] = Math.max(nums[i-1] + dp[i-2],dp[i-1]);
+        }
+
+        //第一家不偷
+        dp1[0] = 0;
+        dp1[1] = 0;
+        for(int i = 2; i <= nums.length; i++){
+            dp1[i] = Math.max(nums[i-1] + dp1[i-2],dp1[i-1]);
+        }
+
+        return Math.max(dp1[nums.length],dp[nums.length-1]);
+
+    }
+}

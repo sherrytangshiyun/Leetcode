@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class leetcode337rob_3 {
+    public static void main(String[] args) {
+
+//        Scanner in = new Scanner(System.in);
+//        int n = in.nextInt();
+//        int[] arr = new int[n];
+//        for(int i = 0; i < n; i++){
+//            arr[i] = in.nextInt();
+//        }
+        //TreeNode node1 = new TreeNode(2);
+        TreeNode root = new TreeNode(3);
+        TreeNode node1 = new TreeNode(2);
+        TreeNode node2 = new TreeNode(6);
+        TreeNode node3 = new TreeNode(1);
+        TreeNode node4 = new TreeNode(5);
+        TreeNode node5 = new TreeNode(4);
+        TreeNode node6 = new TreeNode(9);
+        root.setRight(node1);
+        root.setLeft(node2);
+        node2.setRight(node3);
+        node3.setRight(node4);
+        node4.setRight(node5);
+        node4.setLeft(node6);
+
+        int res = rob_3(root);
+        System.out.print(res);
+
+    }
+
+    private static int rob_3(TreeNode root){
+        int[] res = tryRob(root);
+        return Math.max(res[0],res[1]);
+
+    }
+
+    private static int[] tryRob(TreeNode root){
+        int[] res = new int[2];
+        if(root == null){
+            return res;
+        }
+
+        int[] left = tryRob(root.right);
+        int[] right = tryRob(root.left);
+
+        res[0] = Math.max(left[0],left[1]) + Math.max(right[0], right[1]);//偷根节点
+        res[1] = left[0] + right[0] + root.val;//不偷根节点
+
+
+        return res;
+
+    }
+}

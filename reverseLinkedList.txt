@@ -1,0 +1,62 @@
+
+//递归实现反转链表
+//先从头开始压栈，直到最后一个节点开始弹栈，改变指针指向
+
+public class reverseLinkedList {
+
+    public static class Node{
+
+        public Node next;
+
+        public int val;
+
+        public Node(int x){ val = x; }
+
+        public void setNext(Node next){
+            this.next = next;
+        }
+
+        public int getData(){
+            return this.val;
+        }
+
+        public Node getNext(){ return this.next; }
+
+
+    }
+    public static void main(String[] args) {
+        Node head = new Node(0);
+        Node node1 = new Node(1);
+        Node node2 = new Node(2);
+        Node node3 = new Node(3);
+        Node node4 = new Node(4);
+
+        head.setNext(node1);
+        node1.setNext(node2);
+        node2.setNext(node3);
+        node3.setNext(node4);
+
+        Node curNode = reverseLinkedList(head);
+
+        while(curNode != null){
+
+            System.out.print(curNode.getData() + " ");
+            curNode = curNode.getNext();
+        }
+
+    }
+
+    private static Node reverseLinkedList(Node head){
+
+        if(head == null || head.next == null)
+            return head;
+
+        Node currHead = reverseLinkedList(head.next);
+
+        head.next.next = head;
+        head.next = null;
+
+        return currHead;
+
+    }
+}

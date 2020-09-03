@@ -1,0 +1,94 @@
+import java.util.HashMap;
+import java.util.Map;
+
+//双向链表+hashmap实现LRU，最近最久未使用
+//某一结点被访问时，就将其调整到链表头部，每当容量满了，就将链表尾部的节点删除，删除的节点即为最近最久未使用节点
+public class LRUCache1 {
+
+    class LinkedNode{
+        int key;
+        int value;
+        LinkedNode prev;
+        LinkedNode next;
+        public LinkedNode(){}
+        public LinkedNode(int _key, int _value){
+            key = _key;
+            value = _value;
+        }
+    }
+
+    private Map<Integer, LinkedNode> cache = new HashMap<>();
+    private int size;
+    private int capacity;
+    private LinkedNode head,tail;
+
+    public void LruCache(int capacity){
+        this.size = 0;
+        this.capacity = capacity;
+
+        head = new LinkedNode();
+        tail = new LinkedNode();
+
+        head.next = tail;
+        tail.prev = head;
+    }
+
+    public int get(int key){
+        LinkedNode node = cache.get(key);
+        if(node == null)
+            return -1;
+        movetoHead(node);
+        return node.value;
+    }
+
+    public void put(int key, int value){
+        LinkedNode node = cache.get(key);
+        if(node == null){
+             LinkedNode newnode = new LinkedNode(key,value);
+             cache.put(key,newnode);
+             addtoHead(newnode);
+             ++size;
+             if(size > capacity){
+                 LinkedNode tail = removeTail();
+                 cache.remove(tail.key);
+                 --size;
+             }
+             else{
+                 node.value = value;
+                 movetoHead(node);
+             }
+
+        }
+    }
+
+    public void movetoHead(LinkedNode node){
+        removeNode(node);
+        addtoHead(node);
+    }
+    public void removeNode(LinkedNode node){
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+
+    }
+
+    public void addtoHead(LinkedNode node){
+        node.prev = head;
+        node.next = head.next;
+        head.next.prev = node;
+        head.next = node;
+
+    }
+
+    private LinkedNode removeTail(){
+        LinkedNode res = tail.prev;
+        removeNode(tail);
+        return res;
+    }
+
+    public static void main(String[] args) {
+//        LRUCache1 obj = new LRUCache1(3);
+//        int param_1 = obj.get(key);
+//        obj.put(key,value);
+
+    }
+}

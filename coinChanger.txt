@@ -1,0 +1,46 @@
+import java.util.Scanner;
+
+public class coinChange {
+    public static void main(String[] args) {
+        //int n = 6;
+
+        Scanner in = new Scanner(System.in);
+        int n = in.nextInt();
+        int target = in.nextInt();
+
+        int[] coins = new int[n];
+        int[] func = new int[target+1]; //用来记录硬币之和是i的最小硬币数,输出func[func.length-1]即为和为target的最小硬币数
+
+        for(int i = 0; i < n; i++){
+            coins[i] = in.nextInt();
+        }
+
+
+        int ans = coinChange(coins,target,func);
+        System.out.print(ans);
+
+    }
+
+    private static int coinChange(int[] coins , int amount, int[] func){
+
+        func[0] = 0;
+
+        for(int i = 0; i < func.length; i++){
+             func[i] = getMin(i,coins,func) + 1;
+        }
+
+        return func[func.length-1];
+    }
+
+    private static int getMin(int curi,int[] arr,int[] func){
+
+        int min = Integer.MAX_VALUE;
+
+        for(int i = 0; i < arr.length; i++){
+            if(func[curi-arr[i]] < min)
+                min = func[curi - arr[i]];
+        }
+
+        return min;
+    }
+}

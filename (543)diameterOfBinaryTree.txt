@@ -1,0 +1,47 @@
+public class leetcode543diameterOfBinaryTree {
+    public static void main(String[] args) {
+        TreeNode node0 = new TreeNode(-10);
+        TreeNode node1 = new TreeNode(9);
+        TreeNode node2 = new TreeNode(20);
+        TreeNode node3 = new TreeNode(15);
+        TreeNode node4 = new TreeNode(7);
+//        TreeNode node5 = new TreeNode(-5);
+//        TreeNode node6 = new TreeNode(6);
+
+        node0.setLeft(node1);
+        node0.setRight(node2);
+        node2.setRight(node4);
+        node2.setLeft(node3);
+//        node4.setRight(node5);
+//        node5.setLeft(node6);
+
+        int res = diameterOfBinaryTree(node0);
+        System.out.print(res);
+    }
+
+
+    static int maxLen = 0;
+    private static int diameterOfBinaryTree(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        if(root != null && root.left == null && root.right == null){
+            return 0;
+        }
+        caculate(root);
+        return maxLen;
+    }
+
+    private static int caculate(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+        int left = caculate(root.left);
+        int right = caculate(root.right);
+
+        int temp =  left + right;
+
+        maxLen = Math.max(temp,maxLen);
+        return Math.max(left+1,right+1);
+    }
+}

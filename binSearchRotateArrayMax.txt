@@ -1,0 +1,31 @@
+//旋转数组二分查找最大值
+
+public class biSearch {
+    public static void main(String[] args) {
+        int[] arr= {1,2,8,9,14,23,5};
+        int low = 0;
+        int high = arr.length;
+        int ans = biSearch(arr,low,high);
+        System.out.print(ans);
+    }
+
+    private static int biSearch(int[] arr,int low, int high){
+
+        int index,max;
+
+        while(low < high)
+        {
+            index = (high+low)/2;
+            max = arr[index];
+            if(arr[index] > arr[index+1]){
+                high = index;
+
+            }
+            else{
+                low = index + 1;
+            }
+
+        }
+        return arr[low];
+    }
+}
